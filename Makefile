@@ -24,6 +24,12 @@ deploy-static: web/static/index.html
 	[ -n "$(DIST)" ] && aws cloudfront create-invalidation --distribution-id $(DIST) --paths '/*' || true
 	aws cloudformation describe-stacks --output text --query 'Stacks[*].Outputs' --stack-name $(APP)
 
+docker:
+	docker-compose up -d
+
+docker-stop:
+	docker-compose down
+
 dev-debug:
 	make clean
 	GCFLAGS="-N -l" make -j handlers
